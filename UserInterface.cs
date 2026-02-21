@@ -1,48 +1,38 @@
 ﻿using System;
 using CMC.Input;
+using ReusableUserInterface;
 
 namespace CMC.ReusableUserInterface
 {
     internal class UserInterface
     {
-        string[] menuItems;
+        // *******************************
+        // Fields
+        // *******************************
+        //string[] menuItems;
 
-        public UserInterface(string[] menuItems)
-        {
-            this.menuItems = menuItems;
-        }
+        // *******************************
+        // Properties
+        // *******************************
 
-        // return selection
-        public int GetMenuSelection()
+        // *******************************
+        // Public methods
+        // *******************************
+
+        // selection result
+        public MenuOptions GetMenuSelection()
         {
-            int itemCount = menuItems.Length;
+            int itemCount = Enum.GetNames(typeof(MenuOptions)).Length;
 
             ShowGreeting();
-            ShowMainMenu(menuItems);
+            ShowMainMenu();
 
             int result = GetInput.AsInt("Make Selection", 0, itemCount);
+            MenuOptions selection = (MenuOptions)result;
 
-            return 0;
+            return selection;
         }
 
-        // greeting
-        private void ShowGreeting()
-        {
-            Console.WriteLine("Greetings");
-        }
-
-        // main menu
-        private void ShowMainMenu(string[] menuItems)
-        {
-            foreach (string item in menuItems)
-            {
-                Console.WriteLine(item);
-            }
-            Console.WriteLine();
-        }
-
-
-        // selection prompt
         public (int id, string name, decimal price) GetNewItem()
         {
             int id = GetInput.AsInt("id");
@@ -51,8 +41,6 @@ namespace CMC.ReusableUserInterface
 
             return (id, name, price);
         }
-
-        // selection result
 
         public void ShowItem(string item)
         {
@@ -78,5 +66,36 @@ namespace CMC.ReusableUserInterface
             Console.WriteLine("Exiting");
         }
 
+        // *******************************
+        // Private methods
+        // *******************************
+
+        // return selection
+        // greeting
+        private void ShowGreeting()
+        {
+            Console.WriteLine("Greetings");
+        }
+
+        // main menu
+        private void ShowMainMenu()
+        {
+            for (int currentMenuNumber = 0; currentMenuNumber < Enum.GetNames(typeof(MenuOptions)).Length; currentMenuNumber++)
+            {
+                Console.WriteLine($"{currentMenuNumber}. {(MenuOptions)currentMenuNumber}");
+            }
+            Console.WriteLine();
+        }
+
+
+        // selection prompt
+
+        // *******************************
+        // Constructors
+        // *******************************
+        public UserInterface()
+        {
+            //this.menuItems = menuItems;
+        }
     }
 }
