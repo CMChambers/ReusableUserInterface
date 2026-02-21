@@ -56,8 +56,10 @@ namespace CMC.ReusableUserInterface
 
         public void ShowItem(string item)
         {
-            Console.WriteLine(item);
+            if (item != null)
+            { Console.WriteLine(item); }
         }
+
         public void ShowItemList(string[] itemList)
         {
             foreach (string item in itemList)
